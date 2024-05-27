@@ -75,7 +75,7 @@ public class AdminPage extends AppCompatActivity {
         if (allAdminCursor != null && allAdminCursor.moveToFirst()) {
             Name.setText(allAdminCursor.getString(4)+" "+allAdminCursor.getString(5));
         }
-
+//nav
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
