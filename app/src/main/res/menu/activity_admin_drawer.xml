@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_Adminprofile"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Admin Profile" />
+        <item
+            android:id="@+id/nav_Addadmin"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Add Admin" />
+        <item
+            android:id="@+id/nav_ViewAllorders"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="View All Orders" />
+
+        <item
+            android:id="@+id/nav_Adddeals"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Add Special Offers" />
+
+
+    </group>
+    <item
+        android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="Log Out" />
+        </menu>
+    </item>
+</menu>
+

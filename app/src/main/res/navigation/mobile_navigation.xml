@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="edu.birzeit.proj.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="edu.birzeit.proj.ui.gallery.GalleryFragment"
+        android:label="Menu Categories"
+        tools:layout="@layout/fragment_gallery" />
+
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="edu.birzeit.proj.ui.slideshow.SlideshowFragment"
+        android:label="Your Orders"
+        tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/nav_yourfavorites"
+        android:name="edu.birzeit.proj.ui.yourfavorites.yourfavoritesFragment"
+        android:label="Your Favorites"
+        tools:layout="@layout/fregment_yourfavorites" />
+    <fragment
+        android:id="@+id/nav_hotdeals"
+        android:name="edu.birzeit.proj.ui.hotdeals.hotdealfragment"
+        android:label="Hot Deals"
+        tools:layout="@layout/fregment_hotdeals" />
+    <fragment
+        android:id="@+id/nav_notifications"
+        android:name="edu.birzeit.proj.ui.notification.notificationFragment"
+        android:label="Notifications"
+        tools:layout="@layout/fregment_notifications" />
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="edu.birzeit.proj.ui.profile.profileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fregment_profile" />
+    <fragment
+        android:id="@+id/nav_logout"
+        android:name="edu.birzeit.proj.ui.logout.logoutfragment"
+        android:label="Log Out"
+        tools:layout="@layout/fregment_logout" />
+</navigation>

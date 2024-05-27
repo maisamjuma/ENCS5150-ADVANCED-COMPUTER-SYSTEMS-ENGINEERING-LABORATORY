@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation2"
+    app:startDestination="@+id/nav_Adminprofile">
+
+    <fragment
+        android:id="@+id/nav_Adminprofile"
+        android:name="edu.birzeit.proj.ui.AdminProfile.AdminProfileFragment"
+        android:label="Admin Profile"
+        tools:layout="@layout/fragment_admin_profile" />
+
+    <fragment
+        android:id="@+id/nav_Addadmin"
+        android:name="edu.birzeit.proj.ui.AddAdmin.AddAdminFragment"
+        android:label="Add Admin"
+        tools:layout="@layout/fragment_add_admin" />
+
+    <fragment
+        android:id="@+id/nav_ViewAllorders"
+        android:name="edu.birzeit.proj.ui.ViewAllOrders.ViewAllOrdersFragment"
+        android:label="Your Orders"
+        tools:layout="@layout/fragment_view_all_orders" />
+
+    <fragment
+        android:id="@+id/nav_Adddeals"
+        android:name="edu.birzeit.proj.ui.SpecialOffer.SpecialOfferFragment"
+        android:label="Hot Deals"
+        tools:layout="@layout/fragment_special_offer" />
+
+    <fragment
+        android:id="@+id/nav_logout"
+        android:name="edu.birzeit.proj.ui.logout.logoutfragment"
+        android:label="Log Out"
+        tools:layout="@layout/fregment_logout" />
+</navigation>

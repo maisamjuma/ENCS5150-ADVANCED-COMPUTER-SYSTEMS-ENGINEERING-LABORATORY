@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeFragment">
+
+    <TextView
+        android:id="@+id/text_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="237dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/homepage"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="270dp"
+            android:layout_height="65dp"
+            android:layout_above="@id/imageView2"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="-206dp"
+            android:text="Doctor Pizza"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@id/imageView2"
+            android:background="@android:color/holo_orange_dark"
+            android:paddingLeft="20dp"
+            android:paddingTop="8dp"
+            android:text="From 10 am to 10 pm week days and 12 pm to 10 pm on Fridays"
+            android:textColor="@android:color/white"
+            android:textSize="17sp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="360dp"
+            android:layout_below="@id/textView2"
+            android:layout_marginTop="-1dp">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="8dp"
+                android:paddingLeft="22dp"
+                android:paddingTop="15dp"
+                android:paddingRight="13dp"
+                android:text="In the bustling streets of Naples, Italy,during the late 18th century, a humble culinary tradition was born. It was within the rustic ovens of local bakers that the first pizza restaurant emerged, offering a simple yet flavorful fare to the hungry masses. From its modest beginnings, this iconic establishment quickly captured the hearts and taste buds of locals and travelers alike, becoming a beloved cornerstone of Neapolitan culture. With each passing generation, the legacy of the pizza restaurant endured, spreading far and wide across continents and cultures, evolving to embrace new flavors and techniques while remaining rooted in its rich heritage. Today, the spirit of the original pizza restaurant lives on, serving as a timeless reminder of the enduring appeal of good food shared with good company."
+                android:textColor="@color/black"
+                android:textSize="19sp" />
+        </ScrollView>
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
