@@ -30,6 +30,7 @@ public class AdminPage extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityAdminPageBinding binding;
     SharedPrefManager sharedPrefManager1;
+    SharedPrefManager sharedPrefManager5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class AdminPage extends AppCompatActivity {
         });
 
         sharedPrefManager1=SharedPrefManager.getInstance(this);
+        sharedPrefManager5=SharedPrefManager.getInstance(this);
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
@@ -68,6 +70,7 @@ public class AdminPage extends AppCompatActivity {
         TextView Name = headerView.findViewById(R.id.thename); // Replace 'your_textview_id' with the actual id of your TextView
 
         String emailAdmin=sharedPrefManager1.readString("newEmail","");
+//        String   emailAdmin=sharedPrefManager5.readString("rami","");
         Email.setText(emailAdmin);
         DataBaseHelperAdmin dataBaseHelperAdmin = new
                 DataBaseHelperAdmin(AdminPage.this, "Admin1", null, 1);

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,15 +9,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
 
         <ImageView
             android:id="@+id/imageView6"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="144dp"
+            android:layout_height="106dp"
+            android:layout_marginLeft="150dp"
             android:layout_marginTop="40dp"
-            android:layout_marginLeft="170dp"
-            app:srcCompat="@drawable/profile" />
+            android:background="@drawable/profile" />
 
         <TextView
             android:id="@+id/textView17"
@@ -28,6 +30,15 @@
             android:textColor="@color/black"
             android:layout_height="wrap_content"
             android:text="User Name" />
+
+        <Button
+            android:id="@+id/change_photo"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="170dp"
+            android:layout_marginTop="60dp"
+            android:background="@android:color/holo_orange_dark"
+            android:text="Change photo" />
         <View
             android:layout_width="430dp"
             android:layout_height="1dp"

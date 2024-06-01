@@ -1,10 +1,13 @@
 package edu.birzeit.proj;
 
 
+import static android.content.ContentValues.TAG;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
 
@@ -56,7 +59,22 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
         String[] selectionArgs = {email};
         return sqLiteDatabase.rawQuery("SELECT * FROM User WHERE Email=?", selectionArgs);
     }
+    public int updateUser(String email, String newFirstName, String newLastName, String newPassword, String newPhoneNumber) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("Fname", newFirstName);
+        values.put("Lname", newLastName);
+        values.put("Password", newPassword);
+        values.put("PHONE", newPhoneNumber);
 
+        String selection = "Email = ?";
+        String[] selectionArgs = {email};
+        try {
+            return db.update("User", values, selection, selectionArgs);
+        } catch (Exception e) {
+            Log.e(TAG, "Error updating User", e);
+            return 0;
+        }
+    }
 
 }
-

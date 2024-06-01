@@ -1,11 +1,13 @@
 package edu.birzeit.proj;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -22,6 +24,8 @@ import edu.birzeit.proj.R;
 import edu.birzeit.proj.databinding.ActivityHomePageBinding;
 
 public class HomePage extends AppCompatActivity {
+
+    SharedPrefManager sharedPrefManager3;
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomePageBinding binding;
@@ -43,6 +47,7 @@ public class HomePage extends AppCompatActivity {
                         .setAnchorView(R.id.fab).show();
             }
         });
+        sharedPrefManager3=SharedPrefManager.getInstance(this);
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
 
@@ -56,6 +61,21 @@ public class HomePage extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_home_page);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+
+        NavigationView navigationView1 = findViewById(R.id.nav_view);
+        View headerView = navigationView1.getHeaderView(0); // 0 indicates the first header
+        TextView Email = headerView.findViewById(R.id.email_user); // Replace 'your_textview_id' with the actual id of your TextView
+        TextView Name = headerView.findViewById(R.id.name_user); // Replace 'your_textview_id' with the actual id of your TextView
+
+        String emailUser=sharedPrefManager3.readString("Email_user","");
+        Email.setText(emailUser);
+        DataBaseHelper dataBaseHelperUser = new
+                DataBaseHelper(HomePage.this, "User1", null, 1);
+        Cursor allUserCursor = dataBaseHelperUser.SearchforUser(emailUser);
+        if (allUserCursor != null && allUserCursor.moveToFirst()) {
+            Name.setText(allUserCursor.getString(4)+" "+allUserCursor.getString(5));
+        }
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

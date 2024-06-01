@@ -3,6 +3,7 @@ package edu.birzeit.proj;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -28,7 +29,9 @@ public class login_Activity extends AppCompatActivity {
     SharedPrefManager sharedPrefManager1;
     SharedPrefManager sharedPrefManager2;
 
+    SharedPrefManager sharedPrefManager3;
 
+    SharedPrefManager sharedPrefManager4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +44,8 @@ public class login_Activity extends AppCompatActivity {
         sharedPrefManager =SharedPrefManager.getInstance(this);
         sharedPrefManager1 =SharedPrefManager.getInstance(this);
         sharedPrefManager2 =SharedPrefManager.getInstance(this);
+        sharedPrefManager3 =SharedPrefManager.getInstance(this);
+        sharedPrefManager4 =SharedPrefManager.getInstance(this);
 
         rememberMeCheckbox = findViewById(R.id.checkboxRem_Me);
 
@@ -83,11 +88,16 @@ public class login_Activity extends AppCompatActivity {
                 String email_login = EmailEditText_login.getText().toString().trim();
                 String pass_login = PasswordEditText.getText().toString().trim();
                 if (email_login.isEmpty()) {
-                    message.setText("Email is empty");
-                } else if (pass_login.isEmpty()) {
-                    message.setText("Password is empty");
-                } else {
+                    EmailEditText_login.setError("Email is empty");
 
+//                    message.setText("Email is empty");
+                } else if (pass_login.isEmpty()) {
+
+                    PasswordEditText.setError("Password is empty");
+
+//                    message.setText("Password is empty");
+                } else {
+                    EmailEditText_login.setBackgroundColor(Color.WHITE);
                     Cursor allAdminCursor = dataBaseHelperAdmin.SearchforAdmin(email_login);
                     if (allAdminCursor.moveToFirst()) {
                         int passwordIndex = allAdminCursor.getColumnIndex("Password");
@@ -98,14 +108,15 @@ public class login_Activity extends AppCompatActivity {
                             pass_login =  Hash_password.hashPassword(pass_login);
                             if (pass_database.equals(pass_login)) {
                                 sharedPrefManager1.writeString("newEmail",email_login);
-
                                 Intent intent = new Intent(login_Activity.this, AdminPage.class);
                                 login_Activity.this.startActivity(intent);
                                 finish();
                             }
                             else {
-                                pass.setText("Incorrect password");
-                                message.setText("");
+//                                pass.setText("Incorrect password");
+                                PasswordEditText.setError("Incorrect password");
+
+//                                message.setText("");
                             }
                         }
                     } else {
@@ -115,18 +126,24 @@ public class login_Activity extends AppCompatActivity {
                             int passwordIndex = allUserCursor.getColumnIndex("Password");
                             if (passwordIndex != -1) {
                                 String pass_database = allUserCursor.getString(passwordIndex);
-                                pass_login = Hash_password.hashPassword(pass_login);
-                                if (pass_database.equals(pass_login)) {
+                                String pass_login1 = Hash_password.hashPassword(pass_login);
+                                if (pass_database.equals(pass_login1)) {
+                                    sharedPrefManager3.writeString("Email_user",email_login);
+                                    sharedPrefManager4.writeString("Pass_User",pass_login);
                                     Intent intent = new Intent(login_Activity.this, HomePage.class);
                                     login_Activity.this.startActivity(intent);
                                     finish();
                                 } else {
-                                    pass.setText("Incorrect password");
-                                    message.setText("");
+//                                    pass.setText("Incorrect password");
+//                                    message.setText("");
+                                    PasswordEditText.setError("Incorrect password");
+
                                 }
                             }
                         }else {
-                            message.setText("NO USER");
+//                            message.setText("NO USER");
+                            EmailEditText_login.setError("NO USER");
+
 
                         }
                     }

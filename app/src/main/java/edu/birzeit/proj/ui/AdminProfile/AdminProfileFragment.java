@@ -1,22 +1,30 @@
 package edu.birzeit.proj.ui.AdminProfile;
 
 
+import static android.app.Activity.RESULT_OK;
 import static androidx.fragment.app.FragmentManager.TAG;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.text.TextUtils;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import edu.birzeit.proj.Admin;
@@ -24,7 +32,9 @@ import edu.birzeit.proj.DataBaseHelper;
 import edu.birzeit.proj.DataBaseHelperAdmin;
 import edu.birzeit.proj.Hash_password;
 import edu.birzeit.proj.AdminPage;
+import edu.birzeit.proj.HomePage;
 import edu.birzeit.proj.MainActivity;
+import edu.birzeit.proj.R;
 import edu.birzeit.proj.SharedPrefManager;
 import edu.birzeit.proj.User;
 import edu.birzeit.proj.databinding.FragmentAdminProfileBinding;
@@ -36,6 +46,10 @@ public class AdminProfileFragment extends Fragment {
     private @NonNull FragmentAdminProfileBinding binding;
     SharedPrefManager sharedPrefManager1;
     SharedPrefManager sharedPrefManager2;
+    SharedPrefManager sharedPrefManager5;
+
+    private static int GALLERY_REQ_CODE = 1000;
+    ImageButton imageB;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -51,13 +65,26 @@ public class AdminProfileFragment extends Fragment {
 
         final EditText lastNameEditText = binding.lastName;
         final EditText passwordEditText = binding.password;
+        final EditText passwordEditText1 = binding.passwordConff;
         final EditText phoneNumberEditText = binding.phoneNumber;
-        final TextView text_error=binding.textError;
         final Button saveButton = binding.saveButton;
+
+        imageB = root.findViewById(R.id.change_photo);
+
         sharedPrefManager1=SharedPrefManager.getInstance(getActivity());
         sharedPrefManager2=SharedPrefManager.getInstance(getActivity());
+        sharedPrefManager5=SharedPrefManager.getInstance(getActivity());
 
+        imageB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intents = new Intent(Intent.ACTION_PICK);
+                intents.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intents, GALLERY_REQ_CODE);
+            }
+        });
         String emailAdmin=sharedPrefManager1.readString("newEmail","");
+//        sharedPrefManager5.writeString("rami",emailAdmin);
         DataBaseHelperAdmin dataBaseHelperAdmin = new
                 DataBaseHelperAdmin(getActivity(), "Admin1", null, 1);
         Cursor allAdminCursor = dataBaseHelperAdmin.SearchforAdmin(emailAdmin);
@@ -69,7 +96,10 @@ public class AdminProfileFragment extends Fragment {
             lastNameEditText.setText(allAdminCursor.getString(5));
             String pass=sharedPrefManager2.readString("Pass","");
             passwordEditText.setText(pass);
-            phoneNumberEditText.setText(allAdminCursor.getString(2));
+            String phoneNumber = allAdminCursor.getString(2);
+            String phoneis = phoneNumber.substring(2);
+            phoneNumberEditText.setText(phoneis);
+//          phoneNumberEditText.setText(allAdminCursor.getString(2));
             Gender.setText(allAdminCursor.getString(3));
             Gender.setEnabled(false);
 
@@ -81,54 +111,71 @@ public class AdminProfileFragment extends Fragment {
             String firstName = firstNameEditText.getText().toString().trim();
             String lastName = lastNameEditText.getText().toString().trim();
             String password = passwordEditText.getText().toString().trim();
+            String password1 = passwordEditText1.getText().toString().trim();
+
             String phoneNumber = phoneNumberEditText.getText().toString().trim();
 
             if (firstName.isEmpty()) {
-                text_error.setText("The First name is Empty");
+                firstNameEditText.setError("the First name is Empt");
+//                text_error.setText("The First name is Empty");
             } else if (firstName.length() < 3) {
-                text_error.setText("The First name is too short");
+                firstNameEditText.setError("The First name is too short");
+//                text_error.setText("The First name is too short");
             }
             else if (!firstName.matches("[a-zA-Z]+")) {
-                text_error.setText("The First name should be letters");
-
+                firstNameEditText.setError("The First name should be letters");
+//                text_error.setText("The First name should be letters");
             } else {
-                text_error.setText("");
+//                text_error.setText("");
 
                 if (lastName.isEmpty()) {
-                    text_error.setText("The Last name is Empty");
+                    lastNameEditText.setError("The Last name is Empty");
+//                    text_error.setText("The Last name is Empty");
                 } else if (lastName.length() < 3) {
-                    text_error.setText("The Last name is too short");
+                    lastNameEditText.setError("The Last name is too short");
+//                    text_error.setText("The Last name is too short");
                 }  else if (!lastName.matches("[a-zA-Z]+")) {
-                    text_error.setText("The Last name should be letters");
+                    lastNameEditText.setError("The Last name should be letters");
+//                    text_error.setText("The Last name should be letters");
                 }
                 else {
-                    text_error.setText("");
-                    if (password.isEmpty())
-                        text_error.setText("The Passowrd  is Empty");
+//                    text_error.setText("");
+                    if (password.isEmpty()) {
+                        passwordEditText.setError("The Password is  Empty");
+                    }
+//                    text_error.setText("The Passowrd  is Empty");
                     else if (password.length() < 8 || !password.matches(".*[a-zA-Z].*")
                             || !password.matches(".*\\d.*")) {
-                        text_error.setText("The Passowrd should " +
+                        passwordEditText.setError("The Passowrd should " +
                                 "be at least 8 characters include at least 1  character and 1 number");
-                    } else{
-                        text_error.setText("");
-                        if (phoneNumber.isEmpty()) {
-                            text_error.setText("The phone is Empty");
-                        } else if (phoneNumber.length() != 8) {
-                            text_error.setText("The phone should be 10 digites");
-                        }else if (!(phoneNumber.matches("\\d+"))) {
-                            text_error.setText("The phone should be just digite");
-                        }
-                        else {
-                            phoneNumber = "05" + phoneNumber;
-                            text_error.setText("");
-                            String hash_pass = Hash_password.hashPassword(password);
-                            dataBaseHelperAdmin.updateAdmin(emailAdmin,firstName,lastName,hash_pass,phoneNumber);
-                            Toast.makeText(getActivity(), "Informations Update", Toast.LENGTH_SHORT).show();
+//                        text_error.setText("The Passowrd should " +
+//                                "be at least 8 characters include at least 1  character and 1 number");
+                    } else {
+                        if (!(password.equals(password1))) {
+//                                        text_error.setText("The PassowrdConfirm is different");
+                            passwordEditText1.setError("The Passowrd Confirm is different");
+                        } else {
+//                        text_error.setText("");
+                            if (phoneNumber.isEmpty()) {
+                                phoneNumberEditText.setError("the Phone is Empty");
+//                            text_error.setText("The phone is Empty");
+                            } else if (phoneNumber.length() != 8) {
+                                phoneNumberEditText.setError("the phone should be 10 digits");
+//                            text_error.setText("The phone should be 10 digites");
+                            } else if (!(phoneNumber.matches("\\d+"))) {
+                                phoneNumberEditText.setError("the phone should be just digite");
+//                            text_error.setText("The phone should be just digite");
+                            } else {
+                                phoneNumber = "05" + phoneNumber;
+//                            text_error.setText("");
+                                String hash_pass = Hash_password.hashPassword(password);
+                                dataBaseHelperAdmin.updateAdmin(emailAdmin, firstName, lastName, hash_pass, phoneNumber);
+                                Toast.makeText(getActivity(), "Informations Update", Toast.LENGTH_SHORT).show();
 
+                            }
                         }
                     }
                 }
-                // Hash the password
 
 
             }
@@ -141,4 +188,14 @@ public class AdminProfileFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == GALLERY_REQ_CODE ) {
+                imageB.setImageURI(data.getData());
+            }
+        }
+    }
+
 }

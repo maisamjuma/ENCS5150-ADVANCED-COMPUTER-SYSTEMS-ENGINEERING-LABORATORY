@@ -65,71 +65,103 @@ public class signup_Activity extends AppCompatActivity {
                 User newUser = new User();
                 Fname = FnameEditText.getText().toString().trim();
                 if (Fname.isEmpty()) {
-                    text_error.setText("The Fisrt name is Empty");
+                    FnameEditText.setError("Fill Firstname");
+                    return;
+//                    text_error.setText("The Fisrt name is Empty");
                 } else if (Fname.length() <3) {
-                    text_error.setText("The First name is too short");
+                    FnameEditText.setError("the First name is too short");
+                    return;
+//                    text_error.setText("The First name is too short");
                 }
                 else if (!Fname.matches("[a-zA-Z]+")) {
-                    text_error.setText("The First name should be letters");
+                    FnameEditText.setError("The First name should be letters");
+                    return;
+//                    text_error.setText("The First name should be letters");
 
                 } else {
-                    text_error.setText("");
-
+//                    text_error.setText("");
                     Lname = LnameEditText.getText().toString().trim();
                     if (Lname.isEmpty()) {
-                        text_error.setText("The Last name is Empty");
+                        LnameEditText.setError("The Last name is Empty");
+                        return;
+
+//                        text_error.setText("The Last name is Empty");
                     } else if (Lname.length() < 3) {
-                        text_error.setText("The Last name is too short");
+                        LnameEditText.setError("The Last name is too short");
+                        return;
+
+//                       text_error.setText("The Last name is too short");
                     }  else if (!Lname.matches("[a-zA-Z]+")) {
-                        text_error.setText("The Last name should be letters");
+                        LnameEditText.setError("The Last name should be letters");
+                        return;
+
+//                        text_error.setText("The Last name should be letters");
                     }
                     else {
-                        text_error.setText("");
+//                        text_error.setText("");
 
                         email = EmailEditText.getText().toString().trim();
                         if (email.isEmpty()) {
-                            text_error.setText("The Email is Empty");
+                            EmailEditText.setError("The Email is Empty");
+                            return;
+//                            text_error.setText("The Email is Empty");
                         } else if (!email.matches(".*@.*\\.com$")) {
-                            text_error.setText("The Email is Wrong Way");
+                            EmailEditText.setError("The Email is Wrong Way");
+                            return;
+//                            text_error.setText("The Email is Wrong Way");
                         }
                         else {
                             DataBaseHelper dataBaseHelper = new
                                     DataBaseHelper(signup_Activity.this, "User1", null, 1);
                             Cursor allUserCursor = dataBaseHelper.SearchforUser(email);
                             if (allUserCursor.moveToFirst()) {
-                                text_error.setText("There is an email that name");
-
+//                                text_error.setText("There is an email that name");
+                                EmailEditText.setError("There is an email that name");
+                                return;
                             } else {
-                                text_error.setText("");
+//                                text_error.setText("");
 
                                 password = PasswordEditText.getText().toString().trim();
                                 password1 = Password_ConfirmEditText.getText().toString().trim();
-                                password = Hash_password.hashPassword(password);
-                                password1 = Hash_password.hashPassword(password1);
-
-                                if (password.isEmpty())
-                                    text_error.setText("The Passowrd  is Empty");
+                                if (password.isEmpty()) {
+//                                    text_error.setText("The Passowrd  is Empty");
+                                    PasswordEditText.setError("The Password  is Empty");
+                                    return;
+                                }
                                 else if (password.length() < 8 || !password.matches(".*[a-zA-Z].*")
                                         || !password.matches(".*\\d.*")) {
-                                    text_error.setText("The Passowrd should " +
-                                            "be at least 8 characters include at least 1  character and 1 number");
+
+                                    PasswordEditText.setError("The Passowrd should "+
+                                            "be at least 8 characters include at least 1 character and 1 number");
+                                    return;
+//                                    text_error.setText("The Passowrd should " +
+//                                            "be at least 8 characters include at least 1  character and 1 number");
                                 } else {
                                     if (!(password.equals(password1))) {
-                                        text_error.setText("The PassowrdConfirm is different");
+                                        Password_ConfirmEditText.setError("The Password Confirm is different");
+                                        return;
+//                                        text_error.setText("The PassowrdConfirm is different");
 
                                     } else {
-                                        text_error.setText("");
+//                                        text_error.setText("");
                                         phone = phoneEditText.getText().toString().trim();
                                         if (phone.isEmpty()) {
-                                            text_error.setText("The phone is Empty");
+                                            phoneEditText.setError("The phone is Empty");
+                                            return;
+//                                            text_error.setText("The phone is Empty");
                                         } else if (phone.length() != 8) {
-                                            text_error.setText("The phone should be 10 digites");
+                                            phoneEditText.setError("The phone should be 10 digites");
+                                            return;
+//                                            text_error.setText("The phone should be 10 digites");
                                         }else if (!(phone.matches("\\d+"))) {
-                                            text_error.setText("The phone should be just digite");
+                                            phoneEditText.setError("The phone should be just digite");
+                                            return;
+//                                            text_error.setText("The phone should be just digite");
                                         }
+
                                         else {
                                             phone = "05" + phone;
-                                            text_error.setText("");
+//                                            text_error.setText("");
                                             newUser.setGender(genderSpinner.getSelectedItem().toString());
                                         }
                                     }
@@ -141,6 +173,7 @@ public class signup_Activity extends AppCompatActivity {
 
                 if(text_error.getText().toString().isEmpty()){
                     newUser.setEmail(EmailEditText.getText().toString());
+                    password = Hash_password.hashPassword(password);
                     newUser.setPassword(password);
                     newUser.setLname(Lname);
                     newUser.setmPhone(phone);
