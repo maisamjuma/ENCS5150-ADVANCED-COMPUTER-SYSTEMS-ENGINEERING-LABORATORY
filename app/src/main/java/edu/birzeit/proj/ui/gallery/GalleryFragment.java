@@ -223,7 +223,8 @@ private void deleteTextViews() {
         deleteTextViews();
         // Hide all buttons initially
         setButtonVisibility(View.GONE);
-        if (query.contains("chicken")) {
+
+        if (query.equals("chicken")) {
             pestoButton.setVisibility(View.VISIBLE);
             pestoText.setText("Pesto Chicken");
             buffaloButton.setVisibility(View.VISIBLE);
@@ -234,14 +235,14 @@ private void deleteTextViews() {
             barbecueText.setText("Barbecue Chicken");
 
         }
-        if (query.contains("beef")) {
+        if (query.equals("beef")) {
             pepperoniButton.setVisibility(View.VISIBLE);
             pepperoniText.setText("Pepperoni");
             calzoneButton.setVisibility(View.VISIBLE);
             calzoneText.setText("Calzone");
 
         }
-        if (query.contains("veggies")) {
+        if (query.equals("veggies")) {
             mushroomButoon.setVisibility(View.VISIBLE);
             mushroomText.setText("Mushroom Truffle");
             vegetarianButton.setVisibility(View.VISIBLE);
@@ -252,7 +253,7 @@ private void deleteTextViews() {
             neapolitanText.setText("Neapolitan");
 
         }
-        if (query.contains("l") || query.contains("large")) {
+        if (query.equals("l") || query.equals("large")) {
             pepperoniButton.setVisibility(View.VISIBLE);
             pepperoniText.setText("Pepperoni");
             pestoButton.setVisibility(View.VISIBLE);
@@ -266,13 +267,13 @@ private void deleteTextViews() {
             newyorkButton.setVisibility(View.VISIBLE);
             newyorkText.setText("New York Style");
         }
-        if (query.contains("s") || query.contains("small")){
+        if (query.equals("s") || query.equals("small")){
 
             resetTextViews();
             // Show all buttons if query is empty
             setButtonVisibility(View.VISIBLE);
         }
-        if (query.contains("m") || query.contains("medium")){
+        if (query.equals("m") || query.equals("medium")){
 
             vegetarianButton.setVisibility(View.VISIBLE);
             vegetarianText.setText("Vegetarian");
@@ -294,7 +295,7 @@ private void deleteTextViews() {
             buffaloText.setText("Buffalo Chicken");
         }
         //all kinds that have any size that is $20 or less
-        if (query.contains("20")){
+        if (query.equals("20")){
 
             vegetarianButton.setVisibility(View.VISIBLE);
             vegetarianText.setText("Vegetarian");
@@ -309,7 +310,7 @@ private void deleteTextViews() {
 
         }
         //all kinds that have any size that are $29
-        if (query.contains("29")){
+        if (query.equals("29")){
             mushroomButoon.setVisibility(View.VISIBLE);
             mushroomText.setText("Mushroom Truffle");
             seafoodButton.setVisibility(View.VISIBLE);
@@ -326,10 +327,9 @@ private void deleteTextViews() {
 //            pestoText.setText("Pesto Chicken");
 //            newyorkButton.setVisibility(View.VISIBLE);
 //            newyorkText.setText("New York Style");
-//
 //        }
         //all kinds that have any size that are $14 or less
-        if (query.contains("14")){
+        if (query.equals("14")){
             newyorkButton.setVisibility(View.VISIBLE);
             newyorkText.setText("New York Style");
             pestoButton.setVisibility(View.VISIBLE);
@@ -341,57 +341,57 @@ private void deleteTextViews() {
 
         }
         // Show buttons based on query
-        if (query.contains("pepperoni")) {
+        if (query.equals("pepperoni")) {
             pepperoniButton.setVisibility(View.VISIBLE);
             pepperoniText.setText("Pepperoni");
         }
-        if (query.contains("pesto") || query.contains("pesto chicken")) {
+        if (query.equals("pesto")) {
             pestoButton.setVisibility(View.VISIBLE);
             pestoText.setText("Pesto Chicken");
         }
-        if (query.contains("seafood")) {
+        if (query.equals("seafood")) {
             seafoodButton.setVisibility(View.VISIBLE);
             seafoodText.setText("Seafood");
         }
 
-        if (query.contains("tandoori") || query.contains("tandoori chicken")) {
+        if (query.equals("tandoori")) {
             TandooriButton.setVisibility(View.VISIBLE);
             tandooriText.setText("Tandoori Chicken");
         }
-        if (query.contains("barbecue")) {
+        if (query.equals("barbecue")) {
             barbecueButton.setVisibility(View.VISIBLE);
             barbecueText.setText("Barbecue");
         }
-        if (query.contains("buffalo") || query.contains("buffalo chicken")) {
+        if (query.equals("buffalo")) {
             buffaloButton.setVisibility(View.VISIBLE);
             buffaloText.setText("Buffalo Chicken");
         }
-        if (query.contains("calzone")) {
+        if (query.equals("calzone")) {
             calzoneButton.setVisibility(View.VISIBLE);
             calzoneText.setText("Calzone");
         }
-        if (query.contains("hawaiian")) {
+        if (query.equals("hawaiian")) {
             hawaiianButton.setVisibility(View.VISIBLE);
             hawaiianText.setText("Hawaiian");
         }
-        if (query.contains("margherita")) {
+        if (query.equals("margherita")) {
             margheritaButton.setVisibility(View.VISIBLE);
             margheritaText.setText("Margherita");
         }
-        if (query.contains("mushroom") || query.contains("mushroom truffle")) {
+        if (query.equals("mushroom") || query.equals("mushroom truffle")) {
             mushroomButoon.setVisibility(View.VISIBLE);
             mushroomText.setText("Mushroom Truffle");
         }
-        if (query.contains("neapolitan")) {
+        if (query.equals("neapolitan")) {
             neapolitanButton.setVisibility(View.VISIBLE);
             neapolitanText.setText("Neapolitan");
         }
-        if (query.contains("new york") || query.contains("new york style")) {
+        if (query.equals("new york") || query.equals("new york style")) {
             newyorkButton.setVisibility(View.VISIBLE);
             newyorkText.setText("New York Style");
 
         }
-        if (query.contains("vegetarian")) {
+        if (query.equals("vegetarian")) {
             vegetarianButton.setVisibility(View.VISIBLE);
             vegetarianText.setText("Vegetarian");
 

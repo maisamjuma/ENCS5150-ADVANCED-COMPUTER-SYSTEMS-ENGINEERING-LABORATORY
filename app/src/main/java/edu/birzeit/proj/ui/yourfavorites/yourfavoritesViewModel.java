@@ -11,7 +11,7 @@ import java.util.List;
 
 public class yourfavoritesViewModel extends ViewModel {
 
-    private static MutableLiveData<List<String>> favoritePizzas;
+    private MutableLiveData<List<String>> favoritePizzas;
 
     public yourfavoritesViewModel() {
         favoritePizzas = new MutableLiveData<>();
@@ -22,7 +22,7 @@ public class yourfavoritesViewModel extends ViewModel {
         return favoritePizzas;
     }
 
-    public static void addToFavorites(String pizzaName) {
+    public void addToFavorites(String pizzaName) {
         List<String> pizzas = favoritePizzas.getValue();
         if (pizzas == null) {
             pizzas = new ArrayList<>();
@@ -31,8 +31,7 @@ public class yourfavoritesViewModel extends ViewModel {
         favoritePizzas.setValue(pizzas);
     }
 
-
-    public static void removeFromFavorites(String pizzaName) {
+    public void removeFromFavorites(String pizzaName) {
         List<String> pizzas = favoritePizzas.getValue();
         if (pizzas != null) {
             pizzas.remove(pizzaName);
