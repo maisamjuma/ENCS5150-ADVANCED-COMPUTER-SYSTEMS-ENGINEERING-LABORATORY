@@ -6,6 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".VegetarianFragment">
+    <!-- activity_pepperoni_fragment.xml -->
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/vegeRootLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true">
 
     <TextView
         android:id="@+id/textView5"
@@ -24,7 +31,7 @@
             android:layout_width="425dp"
             android:layout_height="154dp"
             android:background="@color/white"
-            android:src="@drawable/bar"
+            android:src="@drawable/vege"
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
@@ -36,7 +43,7 @@
             android:textStyle="bold"
             android:textAlignment="center"
             android:layout_height="wrap_content"
-            android:text="Barbecue Pizza" />
+            android:text="vegetarian Pizza" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -84,7 +91,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:layout_marginTop="8dp"
                     android:layout_height="wrap_content"
-                    android:text="L    $34.0" />
+                    android:text="" />
             </LinearLayout>
 
         </LinearLayout>
@@ -137,5 +144,6 @@
 
 
     </LinearLayout>
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

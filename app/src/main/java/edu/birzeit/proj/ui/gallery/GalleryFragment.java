@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.SearchView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -33,10 +35,27 @@ public class GalleryFragment extends Fragment {
     private ImageButton pepperoniButton,pestoButton,seafoodButton,TandooriButton,barbecueButton,
     newyorkButton,margheritaButton,mushroomButoon,neapolitanButton,hawaiianButton,vegetarianButton,
     calzoneButton,buffaloButton;
+    private TextView pepperoniText, pestoText, seafoodText, tandooriText, barbecueText,
+            newyorkText, margheritaText, mushroomText, neapolitanText, hawaiianText,
+            vegetarianText, calzoneText, buffaloText;
+    private SearchView searchView;
 
     @Override
     public void onResume() {
         super.onResume();
+        pepperoniText = getActivity().findViewById(R.id.textPepperoni);
+        pestoText = getActivity().findViewById(R.id.textPestoChicken);
+        seafoodText = getActivity().findViewById(R.id.textSeafood);
+        tandooriText = getActivity().findViewById(R.id.textTandooriChicken);
+        barbecueText = getActivity().findViewById(R.id.textBarbecue);
+        buffaloText = getActivity().findViewById(R.id.textBuffaloChicken);
+        calzoneText =getActivity().findViewById(R.id.textCalzone);
+        hawaiianText = getActivity().findViewById(R.id.textHawaiian);
+        margheritaText = getActivity().findViewById(R.id.textMargherita);
+        mushroomText = getActivity().findViewById(R.id.textMushroomTruffle);
+        neapolitanText = getActivity().findViewById(R.id.textNeapolitan);
+        newyorkText = getActivity().findViewById(R.id.textNewYorkStyle);
+        vegetarianText = getActivity().findViewById(R.id.textVegetarian);
         buffaloButton = getActivity().findViewById(R.id.imageButton2);
         buffaloButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,13 +150,28 @@ public class GalleryFragment extends Fragment {
                 replaceWithPepperoniFragment();
             }
         });
+        searchView = getActivity().findViewById(R.id.search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            public boolean onQueryTextSubmit(String query) {
+                filterButtons(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterButtons(newText);
+                return true;
+            }
+        });
 
 
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_gallery,container,false);
+        View rootView = inflater.inflate(R.layout.fragment_gallery, container, false);
+
+        return rootView;
     }
 
     @Override
@@ -145,7 +179,240 @@ public class GalleryFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+private void deleteTextViews() {
+    pepperoniText.setText("");
+    pestoText.setText("");
+    seafoodText.setText("");
+    tandooriText.setText("");
+    barbecueText.setText("");
+    buffaloText.setText("");
+    calzoneText.setText("");
+    hawaiianText.setText("");
+    margheritaText.setText("");
+    mushroomText.setText("");
+    neapolitanText.setText("");
+    newyorkText.setText("");
+    vegetarianText.setText("");
+}
+    private void resetTextViews() {
+        pepperoniText.setText("Pepperoni");
+        pestoText.setText("Pesto Chicken");
+        seafoodText.setText("Seafood");
+        tandooriText.setText("Tandoori Chicken");
+        barbecueText.setText("Barbecue Chicken");
+        buffaloText.setText("Buffalo Chicken");
+        calzoneText.setText("Calzone");
+        hawaiianText.setText("Hawaiian");
+        margheritaText.setText("Margherita");
+        mushroomText.setText("Mushroom Truffle");
+        neapolitanText.setText("Neapolitan");
+        newyorkText.setText("New York Style");
+        vegetarianText.setText("Vegetarian");
 
+    }
+
+    private void filterButtons(String query) {
+        query = query.toLowerCase().trim();
+
+        if (query.isEmpty()) {
+            resetTextViews();
+            // Show all buttons if query is empty
+            setButtonVisibility(View.VISIBLE);
+            return;
+        }
+        deleteTextViews();
+        // Hide all buttons initially
+        setButtonVisibility(View.GONE);
+        if (query.contains("chicken")) {
+            pestoButton.setVisibility(View.VISIBLE);
+            pestoText.setText("Pesto Chicken");
+            buffaloButton.setVisibility(View.VISIBLE);
+            buffaloText.setText("Buffalo Chicken");
+            TandooriButton.setVisibility(View.VISIBLE);
+            tandooriText.setText("Tandoori Chicken");
+            barbecueButton.setVisibility(View.VISIBLE);
+            barbecueText.setText("Barbecue Chicken");
+
+        }
+        if (query.contains("beef")) {
+            pepperoniButton.setVisibility(View.VISIBLE);
+            pepperoniText.setText("Pepperoni");
+            calzoneButton.setVisibility(View.VISIBLE);
+            calzoneText.setText("Calzone");
+
+        }
+        if (query.contains("veggies")) {
+            mushroomButoon.setVisibility(View.VISIBLE);
+            mushroomText.setText("Mushroom Truffle");
+            vegetarianButton.setVisibility(View.VISIBLE);
+            vegetarianText.setText("Vegetarian");
+            margheritaButton.setVisibility(View.VISIBLE);
+            margheritaText.setText("Margherita");
+            neapolitanButton.setVisibility(View.VISIBLE);
+            neapolitanText.setText("Neapolitan");
+
+        }
+        if (query.contains("l") || query.contains("large")) {
+            pepperoniButton.setVisibility(View.VISIBLE);
+            pepperoniText.setText("Pepperoni");
+            pestoButton.setVisibility(View.VISIBLE);
+            pestoText.setText("Pesto Chicken");
+            TandooriButton.setVisibility(View.VISIBLE);
+            tandooriText.setText("Tandoori Chicken");
+            calzoneButton.setVisibility(View.VISIBLE);
+            calzoneText.setText("Calzone");
+            barbecueButton.setVisibility(View.VISIBLE);
+            barbecueText.setText("Barbecue");
+            newyorkButton.setVisibility(View.VISIBLE);
+            newyorkText.setText("New York Style");
+        }
+        if (query.contains("s") || query.contains("small")){
+
+            resetTextViews();
+            // Show all buttons if query is empty
+            setButtonVisibility(View.VISIBLE);
+        }
+        if (query.contains("m") || query.contains("medium")){
+
+            vegetarianButton.setVisibility(View.VISIBLE);
+            vegetarianText.setText("Vegetarian");
+            newyorkButton.setVisibility(View.VISIBLE);
+            newyorkText.setText("New York Style");
+            neapolitanButton.setVisibility(View.VISIBLE);
+            neapolitanText.setText("Neapolitan");
+            mushroomButoon.setVisibility(View.VISIBLE);
+            mushroomText.setText("Mushroom Truffle");
+            pepperoniButton.setVisibility(View.VISIBLE);
+            pepperoniText.setText("Pepperoni");
+            seafoodButton.setVisibility(View.VISIBLE);
+            seafoodText.setText("Seafood");
+            pestoButton.setVisibility(View.VISIBLE);
+            pestoText.setText("Pesto Chicken");
+            TandooriButton.setVisibility(View.VISIBLE);
+            tandooriText.setText("Tandoori Chicken");
+            buffaloButton.setVisibility(View.VISIBLE);
+            buffaloText.setText("Buffalo Chicken");
+        }
+        //all kinds that have any size that is $20 or less
+        if (query.contains("20")){
+
+            vegetarianButton.setVisibility(View.VISIBLE);
+            vegetarianText.setText("Vegetarian");
+            newyorkButton.setVisibility(View.VISIBLE);
+            newyorkText.setText("New York Style");
+            neapolitanButton.setVisibility(View.VISIBLE);
+            neapolitanText.setText("Neapolitan");
+            pestoButton.setVisibility(View.VISIBLE);
+            pestoText.setText("Pesto Chicken");
+            TandooriButton.setVisibility(View.VISIBLE);
+            tandooriText.setText("Tandoori Chicken");
+
+        }
+        //all kinds that have any size that are $29
+        if (query.contains("29")){
+            mushroomButoon.setVisibility(View.VISIBLE);
+            mushroomText.setText("Mushroom Truffle");
+            seafoodButton.setVisibility(View.VISIBLE);
+            seafoodText.setText("Seafood");
+            vegetarianButton.setVisibility(View.VISIBLE);
+            vegetarianText.setText("Vegetarian");
+
+        }
+//        //all kinds that have any size that are $12 ans small
+//        if (query.contains("s12")||query.contains("small12") ){
+//            vegetarianButton.setVisibility(View.VISIBLE);
+//            vegetarianText.setText("Vegetarian");
+//            pestoButton.setVisibility(View.VISIBLE);
+//            pestoText.setText("Pesto Chicken");
+//            newyorkButton.setVisibility(View.VISIBLE);
+//            newyorkText.setText("New York Style");
+//
+//        }
+        //all kinds that have any size that are $14 or less
+        if (query.contains("14")){
+            newyorkButton.setVisibility(View.VISIBLE);
+            newyorkText.setText("New York Style");
+            pestoButton.setVisibility(View.VISIBLE);
+            pestoText.setText("Pesto Chicken");
+            TandooriButton.setVisibility(View.VISIBLE);
+            tandooriText.setText("Tandoori Chicken");
+            vegetarianButton.setVisibility(View.VISIBLE);
+            vegetarianText.setText("Vegetarian");
+
+        }
+        // Show buttons based on query
+        if (query.contains("pepperoni")) {
+            pepperoniButton.setVisibility(View.VISIBLE);
+            pepperoniText.setText("Pepperoni");
+        }
+        if (query.contains("pesto") || query.contains("pesto chicken")) {
+            pestoButton.setVisibility(View.VISIBLE);
+            pestoText.setText("Pesto Chicken");
+        }
+        if (query.contains("seafood")) {
+            seafoodButton.setVisibility(View.VISIBLE);
+            seafoodText.setText("Seafood");
+        }
+
+        if (query.contains("tandoori") || query.contains("tandoori chicken")) {
+            TandooriButton.setVisibility(View.VISIBLE);
+            tandooriText.setText("Tandoori Chicken");
+        }
+        if (query.contains("barbecue")) {
+            barbecueButton.setVisibility(View.VISIBLE);
+            barbecueText.setText("Barbecue");
+        }
+        if (query.contains("buffalo") || query.contains("buffalo chicken")) {
+            buffaloButton.setVisibility(View.VISIBLE);
+            buffaloText.setText("Buffalo Chicken");
+        }
+        if (query.contains("calzone")) {
+            calzoneButton.setVisibility(View.VISIBLE);
+            calzoneText.setText("Calzone");
+        }
+        if (query.contains("hawaiian")) {
+            hawaiianButton.setVisibility(View.VISIBLE);
+            hawaiianText.setText("Hawaiian");
+        }
+        if (query.contains("margherita")) {
+            margheritaButton.setVisibility(View.VISIBLE);
+            margheritaText.setText("Margherita");
+        }
+        if (query.contains("mushroom") || query.contains("mushroom truffle")) {
+            mushroomButoon.setVisibility(View.VISIBLE);
+            mushroomText.setText("Mushroom Truffle");
+        }
+        if (query.contains("neapolitan")) {
+            neapolitanButton.setVisibility(View.VISIBLE);
+            neapolitanText.setText("Neapolitan");
+        }
+        if (query.contains("new york") || query.contains("new york style")) {
+            newyorkButton.setVisibility(View.VISIBLE);
+            newyorkText.setText("New York Style");
+
+        }
+        if (query.contains("vegetarian")) {
+            vegetarianButton.setVisibility(View.VISIBLE);
+            vegetarianText.setText("Vegetarian");
+
+        }
+    }
+
+    private void setButtonVisibility(int visibility) {
+        pepperoniButton.setVisibility(visibility);
+        pestoButton.setVisibility(visibility);
+        seafoodButton.setVisibility(visibility);
+        TandooriButton.setVisibility(visibility);
+        barbecueButton.setVisibility(visibility);
+        buffaloButton.setVisibility(visibility);
+        calzoneButton.setVisibility(visibility);
+        hawaiianButton.setVisibility(visibility);
+        margheritaButton.setVisibility(visibility);
+        mushroomButoon.setVisibility(visibility);
+        neapolitanButton.setVisibility(visibility);
+        newyorkButton.setVisibility(visibility);
+        vegetarianButton.setVisibility(visibility);
+    }
     private void replaceWithPepperoniFragment() {
         PepperoniFragment pepperoniFragment = new PepperoniFragment();
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();

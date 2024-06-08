@@ -6,6 +6,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BuffaloFragment">
+    <!-- activity_pepperoni_fragment.xml -->
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/buffaloRootLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true">
 
     <TextView
         android:id="@+id/textView5"
@@ -24,7 +31,7 @@
             android:layout_width="425dp"
             android:layout_height="154dp"
             android:background="@color/white"
-            android:src="@drawable/pepp"
+            android:src="@drawable/buff"
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
@@ -36,7 +43,7 @@
             android:textStyle="bold"
             android:textAlignment="center"
             android:layout_height="wrap_content"
-            android:text="Pepperoni" />
+            android:text="Buffalo Chicken Pizza"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -66,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/holo_orange_dark"
                     android:textSize="20dp"
-                    android:text="S    $12.0" />
+                    android:text="S    $21.0" />
 
                 <TextView
                     android:id="@+id/textView9"
@@ -75,16 +82,9 @@
                     android:textSize="20dp"
                     android:layout_marginTop="8dp"
                     android:textColor="@android:color/holo_orange_dark"
-                    android:text="M   $20.0" />
+                    android:text="M   $30.0" />
 
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="match_parent"
-                    android:textSize="20dp"
-                    android:textColor="@android:color/holo_orange_dark"
-                    android:layout_marginTop="8dp"
-                    android:layout_height="wrap_content"
-                    android:text="L    $34.0" />
+
             </LinearLayout>
 
         </LinearLayout>
@@ -138,5 +138,6 @@
 
 
     </LinearLayout>
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

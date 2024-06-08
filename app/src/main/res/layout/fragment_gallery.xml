@@ -24,30 +24,40 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <SearchView
+                android:id="@+id/search"
+                android:layout_width="370dp"
+                android:layout_height="match_parent"
+                android:queryHint="Search..."
+                android:layout_marginLeft="20dp"
 
-            <!-- First Row -->
+                android:background="@drawable/border"
+                />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="4dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="4dp">
 
                     <ImageButton
                         android:id="@+id/imageButton9"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:onClick="onPizzaButtonClick"
+                        android:background="@color/white"
                         android:scaleType="fitCenter"
                         android:src="@drawable/pepperoni" />
 
                     <TextView
+                        android:id="@+id/textPepperoni"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -60,18 +70,22 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="4dp">
 
                     <ImageButton
                         android:id="@+id/imageButton10"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:onClick="onPizzaButtonClick"
+                        android:background="@color/white"
+
                         android:scaleType="fitCenter"
                         android:src="@drawable/pestochickenpizza" />
 
                     <TextView
+                        android:id="@+id/textPestoChicken"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -86,24 +100,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="8dp">
+
+                android:padding="4dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="4dp">
 
                     <ImageButton
                         android:id="@+id/imageButton11"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:onClick="onPizzaButtonClick"
+                        android:background="@color/white"
+
                         android:scaleType="fitCenter"
                         android:src="@drawable/seafoodpizza" />
 
                     <TextView
+                        android:id="@+id/textSeafood"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -117,17 +136,21 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:padding="8dp">
+
+                    android:padding="4dp">
 
                     <ImageButton
                         android:id="@+id/imageButton12"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:onClick="onPizzaButtonClick"
+                        android:background="@color/white"
+
                         android:scaleType="fitCenter"
                         android:src="@drawable/tandoorichickenpizza" />
 
                     <TextView
+                        android:id="@+id/textTandooriChicken"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -142,24 +165,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="4dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="4dp">
 
                     <ImageButton
                         android:id="@+id/imageButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:onClick="onPizzaButtonClick"
+                        android:background="@color/white"
+
                         android:scaleType="fitCenter"
                         android:src="@drawable/barbecuepizza" />
 
                     <TextView
+                        android:id="@+id/textBarbecue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -172,18 +199,22 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="4dp">
 
                     <ImageButton
                         android:id="@+id/imageButton2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:onClick="onPizzaButtonClick"
+                        android:background="@color/white"
+
                         android:scaleType="fitCenter"
                         android:src="@drawable/buffalochickenpizza" />
 
                     <TextView
+                        android:id="@+id/textBuffaloChicken"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -198,24 +229,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="4dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="4dp">
 
                     <ImageButton
                         android:id="@+id/imageButton3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/white"
+
                         android:onClick="onPizzaButtonClick"
                         android:scaleType="fitCenter"
                         android:src="@drawable/calzone" />
 
                     <TextView
+                        android:id="@+id/textCalzone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -228,8 +263,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="4dp">
 
                     <ImageButton
                         android:id="@+id/imageButton4"
@@ -237,9 +273,12 @@
                         android:layout_height="wrap_content"
                         android:onClick="onPizzaButtonClick"
                         android:scaleType="fitCenter"
+                        android:background="@color/white"
+
                         android:src="@drawable/hawaiian" />
 
                     <TextView
+                        android:id="@+id/textHawaiian"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -254,24 +293,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="4dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="4dp">
 
                     <ImageButton
                         android:id="@+id/imageButton7"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:onClick="onPizzaButtonClick"
+                        android:background="@color/white"
+
                         android:scaleType="fitCenter"
                         android:src="@drawable/neapolitan" />
 
                     <TextView
+                        android:id="@+id/textNeapolitan"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -285,17 +327,20 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="4dp">
 
                     <ImageButton
                         android:id="@+id/imageButton8"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:onClick="onPizzaButtonClick"
+                        android:background="@color/white"
+
                         android:scaleType="fitCenter"
                         android:src="@drawable/newyorkstyle" />
 
                     <TextView
+                        android:id="@+id/textNewYorkStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -310,24 +355,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="4dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="4dp">
 
                     <ImageButton
                         android:id="@+id/imageButton6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:onClick="onPizzaButtonClick"
+                        android:background="@color/white"
+
                         android:scaleType="fitCenter"
                         android:src="@drawable/mushroomtrufflepizza" />
 
                     <TextView
+                        android:id="@+id/textMushroomTruffle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -340,18 +389,23 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="4dp">
 
                     <ImageButton
                         android:id="@+id/imageButton5"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:onClick="onPizzaButtonClick"
+
+                        android:background="@color/white"
+
                         android:scaleType="fitCenter"
                         android:src="@drawable/margherita" />
 
                     <TextView
+                        android:id="@+id/textMargherita"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -366,24 +420,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="8dp">
+                android:padding="4dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:padding="8dp">
+                    android:padding="4dp">
 
                     <ImageButton
                         android:id="@+id/imageButton14"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/white"
+
                         android:onClick="onPizzaButtonClick"
                         android:scaleType="fitCenter"
                         android:src="@drawable/vegetarianpizza" />
 
                     <TextView
+                        android:id="@+id/textVegetarian"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -398,7 +455,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:orientation="vertical"
-                    android:padding="8dp" />
+                    android:padding="4dp" />
             </LinearLayout>
 
         </LinearLayout>

@@ -75,16 +75,15 @@
                     android:layout_height="wrap_content"
                     android:textColor="@android:color/holo_orange_dark"
                     android:textSize="20dp"
-                    android:text="S    $12.0" />
+                    android:text="S    $22.0" />
 
                 <TextView
                     android:id="@+id/textView9"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20dp"
-                    android:layout_marginTop="8dp"
                     android:textColor="@android:color/holo_orange_dark"
-                    android:text="M   $20.0" />
+                    android:text="" />
 
                 <TextView
                     android:id="@+id/textView10"
