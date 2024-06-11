@@ -30,11 +30,9 @@ public class HomePage extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityHomePageBinding binding;
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);}
+        super.onCreate(savedInstanceState);
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+
         binding = ActivityHomePageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 

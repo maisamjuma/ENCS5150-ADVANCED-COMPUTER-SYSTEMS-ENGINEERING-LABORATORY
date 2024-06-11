@@ -1,5 +1,4 @@
 package edu.birzeit.proj;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.TransitionDrawable;
@@ -10,12 +9,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-
 import edu.birzeit.proj.R;
 import edu.birzeit.proj.ui.yourfavorites.yourfavoritesViewModel;
 
@@ -28,14 +25,13 @@ public class seafoodFragment extends Fragment {
     private String pizzaName;
     private yourfavoritesViewModel favoritesViewModel;
 
-
     public seafoodFragment() {
         // Required empty public constructor
     }
 
     // Factory method to create a new instance of this fragment
-    public static PepperoniFragment newInstance(int pizzaImageResource, String pizzaName) {
-        PepperoniFragment fragment = new PepperoniFragment();
+    public static seafoodFragment newInstance(int pizzaImageResource, String pizzaName) {
+        seafoodFragment fragment = new seafoodFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PIZZA_IMAGE_RESOURCE, pizzaImageResource);
         args.putString(ARG_PIZZA_NAME, pizzaName);
@@ -50,9 +46,11 @@ public class seafoodFragment extends Fragment {
             pizzaImageResource = getArguments().getInt(ARG_PIZZA_IMAGE_RESOURCE);
             pizzaName = getArguments().getString(ARG_PIZZA_NAME);
         }
+
         // Initialize the yourfavoritesViewModel instance
         favoritesViewModel = new ViewModelProvider(requireActivity()).get(yourfavoritesViewModel.class);
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,7 +73,7 @@ public class seafoodFragment extends Fragment {
         });
 
         // Restore favorite status when the fragment is created or resumed
-        boolean isFavorite = restoreFavoriteStatusFromSharedPreferences();
+        boolean isFavorite = restoreFavoriteStatusFromSharedPreferences("seafood");
         if (isFavorite) {
             transitionDrawable.startTransition(0); // Fill the heart icon
         }
@@ -84,15 +82,15 @@ public class seafoodFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 // Toggle favorite status
-                boolean isFavorite = toggleFavoriteStatus();
+                boolean isFavorite = toggleFavoriteStatus("seafood");
                 // Update SharedPreferences with the new favorite status
-                saveFavoriteStatusToSharedPreferences(isFavorite);
-                // Start the transition animation
+                saveFavoriteStatusToSharedPreferences("seafood", isFavorite); // Pass pizza type
+                // Start the transition animation based on the new favorite status
                 if (isFavorite) {
-                    transitionDrawable.startTransition(100);
+                    transitionDrawable.startTransition(100); // Start from the empty to full state
                     addToFavorites("seafood");
                 } else {
-                    transitionDrawable.reverseTransition(100);
+                    transitionDrawable.reverseTransition(100); // Start from the full to empty state
                     removeFromFavorites("seafood");
                 }
             }
@@ -115,6 +113,7 @@ public class seafoodFragment extends Fragment {
     }
 
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -126,40 +125,27 @@ public class seafoodFragment extends Fragment {
         // imageView.setImageResource(pizzaImageResource);
         // textView.setText(pizzaName);
     }
-    private boolean toggleFavoriteStatus() {
-        // Retrieve the current favorite status
-        boolean isCurrentlyFavorite = restoreFavoriteStatusFromSharedPreferences();
-
-        // Toggle the favorite status
+    private boolean toggleFavoriteStatus(String pizzaType) {
+        boolean isCurrentlyFavorite = restoreFavoriteStatusFromSharedPreferences(pizzaType);
         boolean newFavoriteStatus = !isCurrentlyFavorite;
-
-        // Save the updated favorite status to SharedPreferences
-        saveFavoriteStatusToSharedPreferences(newFavoriteStatus);
-
-        // Return the new favorite status
+        saveFavoriteStatusToSharedPreferences(pizzaType, newFavoriteStatus);
         return newFavoriteStatus;
     }
 
-    private boolean restoreFavoriteStatusFromSharedPreferences() {
-        // Retrieve favorite status from SharedPreferences
-        // Use the context to access the SharedPreferences instance
+
+    private boolean restoreFavoriteStatusFromSharedPreferences(String pizzaType) {
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("MyFavorites", Context.MODE_PRIVATE);
-        // Use the key to retrieve the favorite status, assuming the key is "favorite_pizza_status"
-        // If the key doesn't exist, return false indicating that the pizza is not a favorite
-        return sharedPreferences.getBoolean("favorite_pizza_status", true);
+        return sharedPreferences.getBoolean("favorite_" + pizzaType + "_status", false);
     }
 
-    private void saveFavoriteStatusToSharedPreferences(boolean isFavorite) {
-        // Save favorite status to SharedPreferences
-        // Use the context to access the SharedPreferences instance
+    private void saveFavoriteStatusToSharedPreferences(String pizzaType, boolean isFavorite) {
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("MyFavorites", Context.MODE_PRIVATE);
-        // Use the editor to modify SharedPreferences
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        // Save the favorite status with the key "favorite_pizza_status"
-        editor.putBoolean("favorite_pizza_status", isFavorite);
-        // Apply the changes
+        editor.putBoolean("favorite_" + pizzaType + "_status", isFavorite);
         editor.apply();
     }
+
+
 
     // Method to add a pizza to favorites
     private void addToFavorites(String pizzaName) {

@@ -35,3 +35,19 @@ public class hotdealfragment extends Fragment {
         binding = null;
     }
 }
+// pizzaTypeTextView = view.findViewById(R.id.pizzaTypeTextView);
+//        priceTextView = view.findViewById(R.id.priceTextView);
+//        dueDateTextView = view.findViewById(R.id.dueDateTextView);
+//        sizeTextView = view.findViewById(R.id.sizeTextView);
+//
+//        if (getArguments() != null) {
+//            String pizzaType = getArguments().getString("pizzaType");
+//            String price = getArguments().getString("price");
+//            String dueDate = getArguments().getString("dueDate");
+//            String size = getArguments().getString("size");
+//
+//            pizzaTypeTextView.setText(pizzaType);
+//            priceTextView.setText(price);
+//            dueDateTextView.setText(dueDate);
+//            sizeTextView.setText(size);
+//        }

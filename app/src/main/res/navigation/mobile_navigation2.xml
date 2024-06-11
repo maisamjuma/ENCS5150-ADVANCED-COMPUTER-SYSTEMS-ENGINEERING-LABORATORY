@@ -27,7 +27,11 @@
         android:id="@+id/nav_Adddeals"
         android:name="edu.birzeit.proj.ui.SpecialOffer.SpecialOfferFragment"
         android:label="Hot Deals"
-        tools:layout="@layout/fragment_special_offer" />
+        tools:layout="@layout/fragment_special_offer" >
+<!--    <action-->
+<!--        android:id="@+id/action_specialOfferFragment_to_hotDealsFragment"-->
+<!--        app:destination="@id/nav_hotdeals" />-->
+    </fragment>
 
     <fragment
         android:id="@+id/nav_logout"
