@@ -1,6 +1,8 @@
 package edu.birzeit.proj;
+
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,11 +10,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import edu.birzeit.proj.R;
 import edu.birzeit.proj.ui.yourfavorites.yourfavoritesViewModel;
 
@@ -20,18 +31,22 @@ public class seafoodFragment extends Fragment {
 
     private static final String ARG_PIZZA_IMAGE_RESOURCE = "pizzaImageResource";
     private static final String ARG_PIZZA_NAME = "pizzaName";
+    SharedPrefManager sharedPrefManager3;
+    SharedPrefManager sharedPrefManager_for_extra;
+    String s;
 
     private int pizzaImageResource;
     private String pizzaName;
     private yourfavoritesViewModel favoritesViewModel;
+
 
     public seafoodFragment() {
         // Required empty public constructor
     }
 
     // Factory method to create a new instance of this fragment
-    public static seafoodFragment newInstance(int pizzaImageResource, String pizzaName) {
-        seafoodFragment fragment = new seafoodFragment();
+    public static PepperoniFragment newInstance(int pizzaImageResource, String pizzaName) {
+        PepperoniFragment fragment = new PepperoniFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_PIZZA_IMAGE_RESOURCE, pizzaImageResource);
         args.putString(ARG_PIZZA_NAME, pizzaName);
@@ -42,15 +57,16 @@ public class seafoodFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPrefManager3=SharedPrefManager.getInstance(getActivity());
+        sharedPrefManager_for_extra=SharedPrefManager.getInstance(getActivity());
+
         if (getArguments() != null) {
             pizzaImageResource = getArguments().getInt(ARG_PIZZA_IMAGE_RESOURCE);
             pizzaName = getArguments().getString(ARG_PIZZA_NAME);
         }
-
         // Initialize the yourfavoritesViewModel instance
         favoritesViewModel = new ViewModelProvider(requireActivity()).get(yourfavoritesViewModel.class);
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,6 +77,12 @@ public class seafoodFragment extends Fragment {
         ImageButton heartButton = rootView.findViewById(R.id.heartButton);
         final TransitionDrawable transitionDrawable = (TransitionDrawable) heartButton.getDrawable();
 
+        Button submit = rootView.findViewById(R.id.submit);
+
+        RadioGroup choiceRadioGroup = rootView.findViewById(R.id.choiceRadioGroup);
+        RadioButton Rsmall = rootView.findViewById(R.id.radioSmall);
+        RadioButton RMedium = rootView.findViewById(R.id.radioMedium);
+
         // Find the root layout
         RelativeLayout rootLayout = rootView.findViewById(R.id.seafoodRootLayout);
 
@@ -69,6 +91,76 @@ public class seafoodFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Consume the click event without performing any action
+            }
+        });
+        choiceRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // Check which radio button is selected
+                if (checkedId == R.id.radioSmall) {
+                    Rsmall.setText(" S    $21.0");
+                    s = Rsmall.getText().toString();
+                }else if (checkedId == R.id.radioMedium)  {
+                    RMedium.setText(" M    $29.0");
+                    s=RMedium.getText().toString();
+                }
+            }
+        });
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (choiceRadioGroup.getCheckedRadioButtonId() == -1) {
+                    // No radio button is checked, display a message
+                    Toast.makeText(getActivity(), "Please select a Size of Pizza", Toast.LENGTH_SHORT).show();
+                } else {
+                    Order_pizza newone = new Order_pizza();
+                    String emailUSER = sharedPrefManager3.readString("Email_user", "");
+                    String extra = sharedPrefManager_for_extra.readString("extra", "");
+                    SharedPreferences preferences = getActivity().getSharedPreferences("sharedPrefManager_for_extra", 0);
+                    preferences.edit().clear().commit();
+
+                    DataBaseHelper_Order dataBaseHelperOrder = new
+                            DataBaseHelper_Order(getActivity(), "order_pizza", null, 1);
+                    newone.setEmail(emailUSER);
+                    newone.setOrderr(" ");
+                    dataBaseHelperOrder.insertOrder(newone);
+
+                    Cursor allOrderCursor = dataBaseHelperOrder.SearchforOrder(emailUSER);
+//
+                    if (allOrderCursor != null && allOrderCursor.moveToFirst()) {
+                        Cursor cursor = dataBaseHelperOrder.SearchforOrder(emailUSER);
+                        if (cursor != null) {
+                            try {
+                                int ordColumnIndex = cursor.getColumnIndex("Ord");
+
+                                if (ordColumnIndex != -1) {
+                                    while (cursor.moveToNext()) {
+                                        // Get the value of the "Ord" column for the current row
+                                        String order = cursor.getString(ordColumnIndex);
+                                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                                        String currentDate = dateFormat.format(new Date());
+
+
+                                        dataBaseHelperOrder.settingOrder(emailUSER, order);
+                                        if (extra == null || extra.isEmpty()) {
+                                            order += "\nSeafood Pizza" + s + " no Extra\n"+ "ordered in:"+ currentDate +"\n\n";
+                                        }
+                                        else {
+                                            order += "\nSeafood Pizza" + s +"  "+ extra +"\n" +"ordered in:"+ currentDate+"\n\n";
+                                        }
+                                        dataBaseHelperOrder.settingOrder(emailUSER, order);
+                                    }
+
+                                }
+
+                            } finally {
+                                cursor.close();  // Always close the cursor to avoid memory leaks
+                            }
+                        }
+                    }
+                    Toast.makeText(getActivity(), "Added To Your Orders", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -84,13 +176,13 @@ public class seafoodFragment extends Fragment {
                 // Toggle favorite status
                 boolean isFavorite = toggleFavoriteStatus("seafood");
                 // Update SharedPreferences with the new favorite status
-                saveFavoriteStatusToSharedPreferences("seafood", isFavorite); // Pass pizza type
-                // Start the transition animation based on the new favorite status
+                saveFavoriteStatusToSharedPreferences("seafood",isFavorite);
+                // Start the transition animation
                 if (isFavorite) {
-                    transitionDrawable.startTransition(100); // Start from the empty to full state
+                    transitionDrawable.startTransition(100);
                     addToFavorites("seafood");
                 } else {
-                    transitionDrawable.reverseTransition(100); // Start from the full to empty state
+                    transitionDrawable.reverseTransition(100);
                     removeFromFavorites("seafood");
                 }
             }
@@ -111,7 +203,6 @@ public class seafoodFragment extends Fragment {
 
         return rootView;
     }
-
 
 
     @Override
@@ -144,8 +235,6 @@ public class seafoodFragment extends Fragment {
         editor.putBoolean("favorite_" + pizzaType + "_status", isFavorite);
         editor.apply();
     }
-
-
 
     // Method to add a pizza to favorites
     private void addToFavorites(String pizzaName) {

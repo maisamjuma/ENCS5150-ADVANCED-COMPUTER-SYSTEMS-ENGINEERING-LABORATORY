@@ -1,6 +1,7 @@
 package edu.birzeit.proj;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,18 +9,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import edu.birzeit.proj.R;
+import edu.birzeit.proj.ui.slideshow.SlideshowViewModel;
 import edu.birzeit.proj.ui.yourfavorites.yourfavoritesViewModel;
 
 public class CalzoneFragment extends Fragment {
 
     private static final String ARG_PIZZA_IMAGE_RESOURCE = "pizzaImageResource";
     private static final String ARG_PIZZA_NAME = "pizzaName";
+    SharedPrefManager sharedPrefManager3;
+    SharedPrefManager sharedPrefManager_for_extra;
+    String s;
+    private SlideshowViewModel ViewOrder;
 
     private int pizzaImageResource;
     private String pizzaName;
@@ -42,6 +57,9 @@ public class CalzoneFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPrefManager3=SharedPrefManager.getInstance(getActivity());
+        sharedPrefManager_for_extra=SharedPrefManager.getInstance(getActivity());
+
         if (getArguments() != null) {
             pizzaImageResource = getArguments().getInt(ARG_PIZZA_IMAGE_RESOURCE);
             pizzaName = getArguments().getString(ARG_PIZZA_NAME);
@@ -71,6 +89,86 @@ public class CalzoneFragment extends Fragment {
                 // Consume the click event without performing any action
             }
         });
+
+        Button submit = rootView.findViewById(R.id.submit);
+        RadioGroup choiceRadioGroup = rootView.findViewById(R.id.choiceRadioGroup);
+        RadioButton Rsmall = rootView.findViewById(R.id.radioSmall);
+        RadioButton Rlarge = rootView.findViewById(R.id.radioLarge);
+
+
+
+        choiceRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // Check which radio button is selected
+                if (checkedId == R.id.radioSmall) {
+                    Rsmall.setText(" S    $22.0");
+                    s=Rsmall.getText().toString();
+                } else if (checkedId == R.id.radioLarge) {
+                    Rlarge.setText(" L    $34.0");
+                    s=Rlarge.getText().toString();
+                }
+            }
+        });
+
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (choiceRadioGroup.getCheckedRadioButtonId() == -1) {
+                    // No radio button is checked, display a message
+                    Toast.makeText(getActivity(), "Please select a Size of Pizza", Toast.LENGTH_SHORT).show();
+                } else {
+                    Order_pizza newone = new Order_pizza();
+                    String emailUSER = sharedPrefManager3.readString("Email_user", "");
+                    String extra = sharedPrefManager_for_extra.readString("extra", "");
+                    SharedPreferences preferences = getActivity().getSharedPreferences("sharedPrefManager_for_extra", 0);
+                    preferences.edit().clear().commit();
+                    // Clear the default value when the fragment is created
+                    sharedPrefManager_for_extra.writeString("extra", "");
+                    DataBaseHelper_Order dataBaseHelperOrder = new
+                            DataBaseHelper_Order(getActivity(), "order_pizza", null, 1);
+                    newone.setEmail(emailUSER);//                newone.setExtra("Extra_order");
+                    newone.setOrderr(" ");
+                    dataBaseHelperOrder.insertOrder(newone);
+                    Cursor allOrderCursor = dataBaseHelperOrder.SearchforOrder(emailUSER);
+                    if (allOrderCursor != null && allOrderCursor.moveToFirst()) {
+                        Cursor cursor = dataBaseHelperOrder.SearchforOrder(emailUSER);
+                        if (cursor != null) {
+                            try {
+                                // Get the index of the "Ord" column
+                                int ordColumnIndex = cursor.getColumnIndex("Ord");
+
+                                if (ordColumnIndex != -1) {
+                                    while (cursor.moveToNext()) {
+                                        String order = cursor.getString(ordColumnIndex);
+                                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                                        String currentDate = dateFormat.format(new Date());
+
+                                        dataBaseHelperOrder.settingOrder(emailUSER, order);
+                                        if (extra == null || extra.isEmpty()) {
+                                            order += "\ncalzone" + s + " no Extra\n"+ "ordered in:"+ currentDate +"\n\n";
+                                        }
+                                        else {
+                                            order += "\ncalzone" + s +"  "+ extra +"\n" +"ordered in:"+ currentDate+"\n\n";
+                                        }
+                                        dataBaseHelperOrder.settingOrder(emailUSER, order);
+                                    }
+
+                                }
+
+                            } finally {
+                                cursor.close();  // Always close the cursor to avoid memory leaks
+                            }
+                        }
+
+                    }
+
+                    Toast.makeText(getActivity(), "Added To Your Orders", Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
+
 
         // Restore favorite status when the fragment is created or resumed
         boolean isFavorite = restoreFavoriteStatusFromSharedPreferences("calzone");

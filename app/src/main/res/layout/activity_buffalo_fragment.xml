@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".BuffaloFragment">
     <!-- activity_pepperoni_fragment.xml -->
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:id="@+id/buffaloRootLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -67,22 +67,29 @@
                 android:layout_marginLeft="140dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView8"
+                <RadioGroup
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@android:color/holo_orange_dark"
-                    android:textSize="20dp"
-                    android:text="S    $21.0" />
+                    android:layout_height="match_parent"
+                    android:id="@+id/choiceRadioGroup">
 
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@android:color/holo_orange_dark"
-                    android:text="M   $30.0" />
+                    <RadioButton
+                        android:id="@+id/radioSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/holo_orange_dark"
+                        android:textSize="20dp"
+                        android:text="S    $21.0" />
+
+                    <RadioButton
+                        android:id="@+id/radioMedium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/holo_orange_dark"
+                        android:textSize="20dp"
+                        android:text="M   $30.0" />
+                </RadioGroup>
+
+
 
 
             </LinearLayout>

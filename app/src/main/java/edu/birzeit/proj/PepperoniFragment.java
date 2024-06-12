@@ -36,11 +36,11 @@ public class PepperoniFragment extends Fragment {
     SharedPrefManager sharedPrefManager3;
     SharedPrefManager sharedPrefManager_for_extra;
     String s;
-
+    private SlideshowViewModel ViewOrder;
     private int pizzaImageResource;
     private String pizzaName;
     private yourfavoritesViewModel favoritesViewModel;
-    private SlideshowViewModel ViewOrder;
+
 
     public PepperoniFragment() {
         // Required empty public constructor
@@ -133,7 +133,7 @@ public class PepperoniFragment extends Fragment {
                     dataBaseHelperOrder.insertOrder(newone);
                     Cursor allOrderCursor = dataBaseHelperOrder.SearchforOrder(emailUSER);
                     if (allOrderCursor != null && allOrderCursor.moveToFirst()) {
-                        Cursor cursor = dataBaseHelperOrder.getOrders();
+                        Cursor cursor = dataBaseHelperOrder.SearchforOrder(emailUSER);
                         if (cursor != null) {
                             try {
                                 // Get the index of the "Ord" column

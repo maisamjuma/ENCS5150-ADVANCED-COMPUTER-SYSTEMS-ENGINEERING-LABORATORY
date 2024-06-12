@@ -10,35 +10,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="144dp"
-            android:layout_height="106dp"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/profile" />
+        <ImageButton
+            android:id="@+id/change_photo"
+            android:layout_width="185dp"
+            android:layout_height="108dp"
+            android:layout_alignLeft="@id/profile_title"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="218dp"
+            android:layout_marginLeft="300dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="1dp"
+            android:layout_toEndOf="@+id/profile_title" />
+
 
         <TextView
-            android:id="@+id/textView17"
+            android:id="@+id/names"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="170dp"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="170dp"
-            android:textSize="20dp"
-            android:textStyle="bold"
+            android:text="User Name"
             android:textColor="@color/black"
-            android:layout_height="wrap_content"
-            android:text="User Name" />
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/change_photo"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="170dp"
-            android:layout_marginTop="60dp"
-            android:background="@android:color/holo_orange_dark"
-            android:text="Change photo" />
         <View
             android:layout_width="430dp"
             android:layout_height="1dp"
@@ -49,8 +49,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="40dp"
             android:layout_marginLeft="16dp"
+            android:layout_marginTop="40dp"
             android:orientation="horizontal">
 
             <TextView
@@ -58,97 +58,97 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:text="First Name"
                 android:textColor="@color/black"
-                android:textSize="13sp"
-                android:text="First Name" />
+                android:textSize="13sp" />
 
             <TextView
-                android:id="@+id/textView24"
+                android:id="@+id/First_name_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:text="Maisam"
                 android:textColor="@color/black"
-                android:textSize="13sp"
-                android:text="Maisam" />
+                android:textSize="13sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView25"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="13sp"
                 android:layout_weight="1"
-                android:text="Last Name" />
+                android:text="Last Name"
+                android:textColor="@color/black"
+                android:textSize="13sp" />
 
             <TextView
-                android:id="@+id/textView26"
+                android:id="@+id/Last_name_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="13sp"
                 android:layout_weight="1"
-                android:text="Alaa" />
+                android:text="Alaa"
+                android:textColor="@color/black"
+                android:textSize="13sp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView20"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="13sp"
                 android:layout_weight="1"
-                android:text="Email" />
+                android:text="Email"
+                android:textColor="@color/black"
+                android:textSize="13sp" />
 
             <TextView
-                android:id="@+id/textView21"
+                android:id="@+id/Email_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="13sp"
                 android:layout_weight="1"
-                android:text="maisam@gmail.com" />
+                android:text="maisam@gmail.com"
+                android:textColor="@color/black"
+                android:textSize="13sp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView28"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="13sp"
                 android:layout_weight="1"
-                android:text="Phone Number" />
+                android:text="Phone Number"
+                android:textColor="@color/black"
+                android:textSize="13sp" />
 
             <TextView
-                android:id="@+id/textView29"
+                android:id="@+id/Phone_profle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="13sp"
                 android:layout_weight="1"
-                android:text="+059392827" />
+                android:text="+059392827"
+                android:textColor="@color/black"
+                android:textSize="13sp" />
         </LinearLayout>
 
         <Button

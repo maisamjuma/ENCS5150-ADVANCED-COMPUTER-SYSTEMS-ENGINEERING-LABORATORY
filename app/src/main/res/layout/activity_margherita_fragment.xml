@@ -67,31 +67,23 @@
                 android:layout_marginLeft="140dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="match_parent"
+                <RadioGroup
+                    android:id="@+id/choiceRadioGroup"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/holo_orange_dark"
-                    android:textSize="20dp"
-                    android:text="S    $23.0" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@android:color/holo_orange_dark"
-                    android:text="" />
+                    <RadioButton
+                        android:id="@+id/radioSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="S    $23.0"
+                        android:textColor="@android:color/holo_orange_dark"
+                        android:textSize="20sp" />
 
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="match_parent"
-                    android:textSize="20dp"
-                    android:textColor="@android:color/holo_orange_dark"
-                    android:layout_marginTop="8dp"
-                    android:layout_height="wrap_content"
-                    android:text="" />
+
+                </RadioGroup>
+
             </LinearLayout>
 
         </LinearLayout>
