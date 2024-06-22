@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.SpecialOffer.SpecialOfferFragment">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,7 +41,6 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -56,7 +54,6 @@
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:textSize="15dp"
-
                 android:textColor="@color/black"
                 android:layout_weight="1"
                 android:text="Pizza Size" />
@@ -83,7 +80,6 @@
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:text="L" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -115,6 +111,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
@@ -127,13 +124,31 @@
                 android:text="Due Date" />
 
             <EditText
-                android:id="@+id/editTextDate"
-                android:layout_width="90dp"
+                android:id="@+id/editTextDay"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:ems="2"
+                android:inputType="number"
+                android:hint="DD" />
+
+            <EditText
+                android:id="@+id/editTextMonth"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:ems="2"
+                android:inputType="number"
+                android:hint="MM" />
+
+            <EditText
+                android:id="@+id/editTextYear"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="150dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:inputType="date" />
+                android:ems="4"
+                android:inputType="number"
+                android:hint="YYYY" />
         </LinearLayout>
 
         <Button
@@ -144,7 +159,5 @@
             android:background="@android:color/holo_orange_dark"
             android:layout_height="wrap_content"
             android:text="Add offer" />
-
     </LinearLayout>
-
 </FrameLayout>

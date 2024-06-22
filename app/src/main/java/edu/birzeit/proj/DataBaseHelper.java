@@ -76,5 +76,26 @@ public class DataBaseHelper extends android.database.sqlite.SQLiteOpenHelper {
             return 0;
         }
     }
+//
+//    public String getCurrentUserEmail() {
+//        SQLiteDatabase sqLiteDatabase = null;
+//        String email = null;
+//        try {
+//            sqLiteDatabase = getReadableDatabase();
+//            Cursor cursor = sqLiteDatabase.rawQuery("SELECT Email FROM User LIMIT 1", null);
+//            if (cursor.moveToFirst()) {
+//                email = cursor.getString(0);
+//            }
+//            cursor.close();
+//        } catch (Exception e) {
+//            Log.e("DataBaseHelper", "Error retrieving current user email", e);
+//        } finally {
+//            if (sqLiteDatabase != null) {
+//                sqLiteDatabase.close();
+//            }
+//        }
+//        return email;
+//    }
+
 
 }

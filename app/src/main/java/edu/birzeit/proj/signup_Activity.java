@@ -55,6 +55,8 @@ public class signup_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 removeUsers();
+                removeOffer();
+                removeOrder();
             }
         });
         final TextView text_error =  (TextView) findViewById(R.id.the_error);
@@ -191,5 +193,13 @@ public class signup_Activity extends AppCompatActivity {
     private void removeUsers() {
         DataBaseHelper dataBaseHelper = new DataBaseHelper(signup_Activity.this, "User1", null, 1);
         dataBaseHelper.deleteAllUsers();
+    }
+    private void removeOffer() {
+        DataBaseHelper_offer dataBaseHelper = new DataBaseHelper_offer(signup_Activity.this, "Offer", null, 1);
+        dataBaseHelper.deleteAllOffers();
+    }
+    private void removeOrder() {
+        DataBaseHelper_Order dataBaseHelper = new DataBaseHelper_Order(signup_Activity.this, "order_pizza", null, 1);
+        dataBaseHelper.deleteAllOrders();
     }
 }

@@ -242,15 +242,28 @@ public class PestoFragment extends Fragment {
         editor.apply();
     }
 
-    // Method to add a pizza to favorites
-    private void addToFavorites(String pizzaName) {
-        // Call the ViewModel method to add the pizza to favorites
-        favoritesViewModel.addToFavorites(pizzaName);
-    }
     // Method to remove a pizza from favorites
     private void removeFromFavorites(String pizzaName) {
         // Call the ViewModel method to remove the pizza from favorites
-        favoritesViewModel.removeFromFavorites(pizzaName);
+        String userEmail = getCurrentUserEmail();
+        if (!userEmail.isEmpty()) {
+            favoritesViewModel.removeFromFavorites(userEmail, pizzaName);
+        } else {
+            // Handle case where user email is empty or not found
+        }
+    }
+
+    private String getCurrentUserEmail() {
+        return sharedPrefManager3.readString("Email_user", "");
+    }
+
+    private void addToFavorites(String pizzaName) {
+        String userEmail = getCurrentUserEmail();
+        if (!userEmail.isEmpty()) {
+            favoritesViewModel.addToFavorites(userEmail, pizzaName);
+        } else {
+            // Handle case where user email is empty or not found
+        }
     }
 
 }

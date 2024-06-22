@@ -1,14 +1,10 @@
 package edu.birzeit.proj.ui.SpecialOffer;
 
 import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,19 +15,19 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.AdapterView;
-
+import android.widget.Toast;
 import java.util.HashMap;
 import java.util.Map;
-
+import edu.birzeit.proj.DataBaseHelper_offer;
+import edu.birzeit.proj.Offer;
 import edu.birzeit.proj.R;
+import java.util.Calendar;
 
 public class SpecialOfferFragment extends Fragment {
 
     private SpecialOfferViewModel mViewModel;
-
     private CheckBox smallCheckBox, mediumCheckBox, largeCheckBox;
-    private EditText priceEditText, dueDateEditText;
-
+    private EditText priceEditText, dayEditText, monthEditText, yearEditText;
     private Button addButton;
 
     public static SpecialOfferFragment newInstance() {
@@ -47,10 +43,12 @@ public class SpecialOfferFragment extends Fragment {
         mediumCheckBox = view.findViewById(R.id.checkBox6);
         largeCheckBox = view.findViewById(R.id.checkBox5);
         priceEditText = view.findViewById(R.id.editTextText2);
-        dueDateEditText = view.findViewById(R.id.editTextDate);
+        dayEditText = view.findViewById(R.id.editTextDay);
+        monthEditText = view.findViewById(R.id.editTextMonth);
+        yearEditText = view.findViewById(R.id.editTextYear);
         addButton = view.findViewById(R.id.button2);
 
-        //all pizza types for the spinner
+        // All pizza types for the spinner
         String[] pizzaTypes = {"Pepperoni", "Barbecue", "Buffalo", "Calzone", "Hawaiian", "Margherita", "Mushroom", "Neapolitan",
                 "New York", "Pesto", "Seafood", "Tandoori", "Vegetarian"};
 
@@ -74,7 +72,6 @@ public class SpecialOfferFragment extends Fragment {
         pizzaSizesMap.put("Seafood", new boolean[]{true, true, false}); // Small, medium
         pizzaSizesMap.put("Tandoori", new boolean[]{true, true, true}); // Small, medium, large
         pizzaSizesMap.put("Vegetarian", new boolean[]{true, true, false}); // Small, medium
-
 
         pizzaTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -130,33 +127,44 @@ public class SpecialOfferFragment extends Fragment {
                 }
             }
         });
+
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Collect input data
                 String selectedPizza = pizzaTypeSpinner.getSelectedItem().toString();
                 String price = priceEditText.getText().toString();
-                String dueDate = dueDateEditText.getText().toString();
                 String size = "";
+
                 if (smallCheckBox.isChecked()) {
-                    size = "Small";
+                    size = "S";
                 } else if (mediumCheckBox.isChecked()) {
-                    size = "Medium";
+                    size = "M";
                 } else if (largeCheckBox.isChecked()) {
-                    size = "Large";
+                    size = "L";
                 }
 
-                // Create bundle to pass data
-                Bundle bundle = new Bundle();
-                bundle.putString("pizzaType", selectedPizza);
-                bundle.putString("price", price);
-                bundle.putString("dueDate", dueDate);
-                bundle.putString("size", size);
+                if (!validateDate()) {
+                    return;
+                }
 
-                // Navigate to HotDealsFragment
-               // Navigation.findNavController(view).navigate(R.id.action_specialOfferFragment_to_hotDealsFragment, bundle);
+                String dayStr = dayEditText.getText().toString().trim();
+                String monthStr = monthEditText.getText().toString().trim();
+                String yearStr = yearEditText.getText().toString().trim();
+                String dueDate = dayStr + "/" + monthStr + "/" + yearStr;
+
+                Offer offer = new Offer();
+                offer.setType(selectedPizza);
+                offer.setSize(size);
+                offer.setPrize(Float.parseFloat(price));
+                offer.setDate(dueDate);
+
+                DataBaseHelper_offer dataBaseHelper = new DataBaseHelper_offer(getActivity(), "Offer", null, 1);
+                dataBaseHelper.insertOffer(offer);
+                Toast.makeText(getActivity(), "Offer Added", Toast.LENGTH_SHORT).show();
+
             }
         });
+
         return view;
     }
 
@@ -165,5 +173,61 @@ public class SpecialOfferFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(SpecialOfferViewModel.class);
         // TODO: Use the ViewModel
+    }
+
+    private boolean validateDate() {
+        String dayStr = dayEditText.getText().toString().trim();
+        String monthStr = monthEditText.getText().toString().trim();
+        String yearStr = yearEditText.getText().toString().trim();
+
+        if (dayStr.isEmpty() || monthStr.isEmpty() || yearStr.isEmpty()) {
+            showToast("All date fields must be filled");
+            return false;
+        }
+
+        int day, month, year;
+
+        try {
+            day = Integer.parseInt(dayStr);
+            month = Integer.parseInt(monthStr);
+            year = Integer.parseInt(yearStr);
+        } catch (NumberFormatException e) {
+            showToast("Invalid date input");
+            return false;
+        }
+
+        if (!isValidDate(day, month, year)) {
+            showToast("Invalid date");
+            return false;
+        }
+
+        Calendar current = Calendar.getInstance();
+        Calendar inputDate = Calendar.getInstance();
+        inputDate.set(year, month - 1, day);
+
+        if (inputDate.before(current)) {
+            showToast("Date must be today or later");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private boolean isValidDate(int day, int month, int year) {
+        if (month < 1 || month > 12) {
+            return false;
+        }
+
+        int[] daysInMonth = {31, (isLeapYear(year) ? 29 : 28), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+        return day >= 1 && day <= daysInMonth[month - 1];
+    }
+
+    private boolean isLeapYear(int year) {
+        return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 }

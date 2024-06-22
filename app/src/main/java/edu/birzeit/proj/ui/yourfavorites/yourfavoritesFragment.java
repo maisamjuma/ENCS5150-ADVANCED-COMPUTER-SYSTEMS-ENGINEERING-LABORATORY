@@ -17,12 +17,16 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import edu.birzeit.proj.BarbecueFragment;
 import edu.birzeit.proj.BuffaloFragment;
 import edu.birzeit.proj.CalzoneFragment;
+import edu.birzeit.proj.DataBaseHelper;
 import edu.birzeit.proj.HawaiianFragment;
 import edu.birzeit.proj.MargheritaFragment;
 import edu.birzeit.proj.MushroomFragment;
@@ -31,9 +35,11 @@ import edu.birzeit.proj.NewYorkFragment;
 import edu.birzeit.proj.PepperoniFragment;
 import edu.birzeit.proj.PestoFragment;
 import edu.birzeit.proj.R;
+import edu.birzeit.proj.SharedPrefManager;
 import edu.birzeit.proj.TandooriFragment;
 import edu.birzeit.proj.VegetarianFragment;
 import edu.birzeit.proj.databinding.FregmentYourfavoritesBinding;
+import edu.birzeit.proj.neww;
 import edu.birzeit.proj.seafoodFragment;
 
 public class yourfavoritesFragment extends Fragment {
@@ -41,13 +47,19 @@ public class yourfavoritesFragment extends Fragment {
     private yourfavoritesViewModel favoritesViewModel;
     private FregmentYourfavoritesBinding binding;
     private LinearLayout favoritesContainer;
-    private SharedPreferences sharedPreferences;
+
+    SharedPrefManager sharedPrefManager3;
+    private DataBaseHelper dbHelper;
+    private String currentUserEmail;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+       //favoritesViewModel = new ViewModelProvider(requireActivity()).get(yourfavoritesViewModel.class);
+        sharedPrefManager3=SharedPrefManager.getInstance(getActivity());
+        currentUserEmail=sharedPrefManager3.readString("Email_user", "");
         favoritesViewModel = new ViewModelProvider(requireActivity()).get(yourfavoritesViewModel.class);
-        sharedPreferences = requireActivity().getSharedPreferences("Favorites", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -57,13 +69,14 @@ public class yourfavoritesFragment extends Fragment {
 
         favoritesContainer = binding.favoritesContainer;
 
-        favoritesViewModel.getFavoritePizzas().observe(getViewLifecycleOwner(), new Observer<List<String>>() {
+
+        favoritesViewModel.getFavoritePizzas(currentUserEmail).observe(getViewLifecycleOwner(), new Observer<List<String>>() {
             @Override
             public void onChanged(List<String> favoritePizzas) {
+                loadFavoritePizzasFromPrefs();
                 displayFavoritePizzas(favoritePizzas);
             }
         });
-
         return rootView;
     }
 
@@ -145,7 +158,7 @@ public class yourfavoritesFragment extends Fragment {
                 return new HawaiianFragment();
             case "barbecue":
                 return new BarbecueFragment();
-            case "buffalo":
+            case "Buffalo":
                 return new BuffaloFragment();
             case "calzone":
                 return new CalzoneFragment();
@@ -169,6 +182,51 @@ public class yourfavoritesFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        saveFavoritePizzasToPrefs();
+    }
 
+    private void saveFavoritePizzasToPrefs() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyFavorites", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        // Retrieve the current list of favorite pizzas from LiveData
+        List<String> favoritePizzasList = favoritesViewModel.getFavoritePizzas(currentUserEmail).getValue();
+
+        // Ensure list is not null before saving
+        if (favoritePizzasList != null) {
+            Set<String> favoritePizzasSet = new HashSet<>(favoritePizzasList);
+            editor.putStringSet(currentUserEmail, favoritePizzasSet);
+            editor.apply();
+        }
+    }
+
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+      // loadFavoritePizzasFromPrefs();
+
+    }
+
+    private void loadFavoritePizzasFromPrefs() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyFavorites", Context.MODE_PRIVATE);
+        Set<String> favoritePizzasSet = sharedPreferences.getStringSet(currentUserEmail, null);
+
+        List<String> favoritePizzasList;
+        if (favoritePizzasSet != null) {
+            favoritePizzasList = new ArrayList<>(favoritePizzasSet);
+        } else {
+            favoritePizzasList = new ArrayList<>(); // Initialize an empty list if no favorites found
+        }
+
+        displayFavoritePizzas(favoritePizzasList);
+    }
 
 }
+
+

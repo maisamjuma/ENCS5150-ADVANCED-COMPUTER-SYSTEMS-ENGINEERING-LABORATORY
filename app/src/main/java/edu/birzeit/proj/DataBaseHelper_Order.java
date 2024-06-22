@@ -35,12 +35,12 @@ public class DataBaseHelper_Order extends android.database.sqlite.SQLiteOpenHelp
         contentValues.put("Ord", order.getOrderr());
 //        contentValues.put("Extra", order.getExtra());
 
-        sqLiteDatabase.insert("Order_pizza", null, contentValues);
+        sqLiteDatabase.insert("order_pizza", null, contentValues);
     }
 
     public void deleteAllOrders() {
         SQLiteDatabase sqLiteDatabase = getWritableDatabase();
-        sqLiteDatabase.delete("Order_pizza", null, null);
+        sqLiteDatabase.delete("order_pizza", null, null);
         sqLiteDatabase.close(); // Close the database connection
     }
     public Cursor getAllOrders() {
@@ -65,7 +65,7 @@ public class DataBaseHelper_Order extends android.database.sqlite.SQLiteOpenHelp
         String selection = "Email = ?";
         String[] selectionArgs = {email};
         try {
-            return db.update("Order_pizza", values, selection, selectionArgs);
+            return db.update("order_pizza", values, selection, selectionArgs);
         } catch (Exception e) {
             Log.e(TAG, "Error updating Order", e);
             return 0;
@@ -80,24 +80,10 @@ public class DataBaseHelper_Order extends android.database.sqlite.SQLiteOpenHelp
         String selection = "Email = ?";
         String[] selectionArgs = {email};
         try {
-            return db.update("Order_pizza", values, selection, selectionArgs);
+            return db.update("order_pizza", values, selection, selectionArgs);
         } catch (Exception e) {
             Log.e(TAG, "Error updating User orders", e);
             return 0;
         }
     }
-//    public String getOrdersByEmail(String email) {
-//        SQLiteDatabase db = getReadableDatabase();
-//        String[] columns = {"Orders"};
-//        String selection = "Email = ?";
-//        String[] selectionArgs = {email};
-//        Cursor cursor = db.query("User", columns, selection, selectionArgs, null, null, null);
-//        if (cursor != null) {
-//            cursor.moveToFirst();
-//            String orders = cursor.getString(6);
-//            cursor.close();
-//            return orders;
-//        }
-//        return null;
-//    }
 }
